@@ -43,6 +43,7 @@
           });
           this.task = "";
         }
+        this.updateLocalStorage();
       },
       changeStatusTask(id){
         this.tasks.map((item) => {
@@ -50,9 +51,21 @@
             item.isCompleted = !item.isCompleted
           }
         });
+        this.updateLocalStorage();
       },
       delTask(id){
         this.tasks = this.tasks.filter((item) => item.id !== id);
+        this.updateLocalStorage();
+      },
+
+      updateLocalStorage(){
+        localStorage.setItem('todo-list-vuejs', JSON.stringify(this.tasks));
+      }
+    },
+    created(){
+      let data = JSON.parse(localStorage.getItem('todo-list-vuejs'));
+      if(Array.isArray(data)){
+        this.tasks = data;
       }
     }
   }
